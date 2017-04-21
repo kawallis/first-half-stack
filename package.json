@@ -1,0 +1,27 @@
+{
+  "name": "first-half-stack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VerteDinde/first-half-stack.git"
+  },
+  "author": "Keeley Hammond",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VerteDinde/first-half-stack/issues"
+  },
+  "homepage": "https://github.com/VerteDinde/first-half-stack#readme",
+  "dependencies": {
+    "mongodb": "^2.2.26",
+    "url": "^0.11.0"
+  }
+}
