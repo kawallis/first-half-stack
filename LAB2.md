@@ -9,6 +9,10 @@
 
 * Add `chai-http` end-to-end tests for your lab.
 
+## Bonus
+
+* Add `DELETE` and `PUT` routes and associated tests
+
 ## Rubric
 
 * Express style Server, App, Project Organization: *3pt*
