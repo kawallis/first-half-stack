@@ -4,17 +4,48 @@ const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 
 const app = require('../lib/app');
-// const connection = require('../lib/connect');
+const connection = require('../lib/connect');
 
 const request = chai.request(app);
+describe('Unicorns REST API', () => {
 
-describe('GET /', () => {
+  const DB_URI = 'mongodb://localhost:27017/unicorns-test';
+  
+  before(() => connection.connect(DB_URI));
+  before(() => connection.db.dropDatabase());
+  after(() => connection.close());
+
+  describe('GET /', () => {
 
 
-  it('says Checkout These Unicorns Foolio', () => {
-    return request
-      .get('/')
-      .then(res => (res.text))
-      .then(text => assert.equal(text, 'Checkout These Unicorns Foolio'));
+    it('says Checkout These Unicorns Foolio', () => {
+      return request
+        .get('/')
+        .then(res => (res.text))
+        .then(text => assert.equal(text, 'Checkout These Unicorns Foolio'));
+    });
   });
+
+  describe('POST /unicorns', () => {
+    const foonicorn = { name: 'brownie', color: 'brown' };
+
+    it('saves the unicorn to the db', () => {
+      return request
+        .post('/unicorns')
+        .send(foonicorn)
+        .then(response => {
+          console.log(response.body);
+          return response.body;
+        })
+        .then(savedUnicorn => {
+          assert.isOk(savedUnicorn._id);
+        });
+    });
+  });
+
 });
+
+
+
+
+
