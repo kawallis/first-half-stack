@@ -8,7 +8,7 @@ const connect = require('../lib/helpers/connect');
 
 const request = chai.request(app);
 
-describe('GET', () => {
+describe('GET /', () => {
   
   it('find poms db', () => {
     return request
@@ -17,7 +17,12 @@ describe('GET', () => {
       console.log(res.body);
       return res.body;
     })
-    .then(pom => assert.deepEqual(pom, 'Ginger'));
+    .then(pom => assert.deepEqual(pom, {}));
+  });
+
+  it('finds a pom by id', () => {
+    return request.get(`/puppies/:${ _id }`)
+    .then()
   });
 
 });
