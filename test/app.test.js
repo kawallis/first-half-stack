@@ -8,21 +8,49 @@ const connect = require('../lib/helpers/connect');
 
 const request = chai.request(app);
 
-describe('GET /', () => {
-  
-  it('find poms db', () => {
+describe('Puppies DB /', () => {
+
+  function savePom(pom) {
     return request
-    .get('/puppies')
-    .then(res => {
-      console.log(res.body);
-      return res.body;
-    })
-    .then(pom => assert.deepEqual(pom, {}));
+      .post('/puppies')
+      .send(pom);
+  }
+
+  const gibbs = {
+    name: 'Gibbs',
+    color: 'white'
+  };
+
+  describe('POST /', () => {
+
+    it('saves a pom', () => {
+      return savePom(gibbs)
+        .then(res => res.body)
+        .then(savedPom => {
+          assert.isOk(savedPom._id);
+          gibbs._id = savedPom._id;
+          assert.deepEqual(savedPom, gibbs);
+        });
+    });
+
   });
 
-  it('finds a pom by id', () => {
-    return request.get(`/puppies/:${ _id }`)
-    .then()
+  describe('GET /', () => {
+    it('find poms db', () => {
+      return request
+        .get('/puppies')
+        .then(res => {
+          console.log(res.body);
+          return res.body;
+        })
+        .then(pom => assert.deepEqual(pom, null));
+    });
+
+    it('finds a pom by id', () => {
+      return request.get(`/puppies/:${gibbs._id}`)
+        .then(res => res.body)
+        .then(pom => assert.deepEqual(pom, gibbs));
+    });
   });
 
 });
