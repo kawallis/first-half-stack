@@ -1,26 +1,25 @@
 {
-  "name": "first-half-stack",
+  "name": "apr24_express-basics",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "mocha",
+    "start": "nodemon server.js",
+    "pretest": "eslint ."
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kawallis/first-half-stack.git"
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kawallis/first-half-stack/issues"
-  },
-  "homepage": "https://github.com/kawallis/first-half-stack#readme",
   "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
     "mongodb": "^2.2.26"
   },
   "devDependencies": {
-    "eslint": "^3.19.0"
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.3.0",
+    "morgan": "^1.8.1"
   }
 }
