@@ -28,10 +28,10 @@ describe('app', () => {
 
         before(() => {
             return request
-            .post('/teas')
-            .send(badTea)
-            .then(res => res.body)
-            .then(savedTea => badTea._id = savedTea._id);
+                .post('/teas')
+                .send(badTea)
+                .then(res => res.body)
+                .then(savedTea => badTea._id = savedTea._id);
         });
 
         it('saves a tea at /testTeas', () => {
@@ -75,12 +75,25 @@ describe('app', () => {
 
         it('updates an item in db with put', () => {
             badTea.name = 'lipton';
-            return request 
+            return request
                 .put(`/teas/${badTea._id}`)
                 .send(badTea)
                 .then(res => res.body)
                 .then(updatedTea => {
                     assert.equal(updatedTea.name, 'lipton');
+                });
+        });
+    });
+
+    describe('REMOVE', () => {
+
+        it('deletes item from db', () => {
+            return request
+                .delete(`/teas/${badTea._id}`)
+                .send(badTea)
+                .then(res => res.body)
+                .then(({deleted}) => {
+                    assert.equal( deleted, true);
                 });
         });
     });
