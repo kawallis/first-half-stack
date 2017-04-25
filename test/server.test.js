@@ -9,6 +9,7 @@ const connection = require('../lib/connect');
 const request = chai.request(app);
 describe('Unicorns REST API', () => {
 
+  const foonicorn = { name: 'brownie', color: 'brown' };
   const DB_URI = 'mongodb://localhost:27017/unicorns-test';
   
   before(() => connection.connect(DB_URI));
@@ -27,18 +28,33 @@ describe('Unicorns REST API', () => {
   });
 
   describe('POST /unicorns', () => {
-    const foonicorn = { name: 'brownie', color: 'brown' };
 
     it('saves the unicorn to the db', () => {
       return request
         .post('/unicorns')
         .send(foonicorn)
         .then(response => {
-          console.log(response.body);
           return response.body;
         })
         .then(savedUnicorn => {
           assert.isOk(savedUnicorn._id);
+          foonicorn._id = savedUnicorn._id;
+          assert.deepEqual(savedUnicorn, foonicorn);
+        });
+    });
+  });
+
+  describe('GET /unicorns/:id', () => {
+
+    it('returns unicorn by id', () => {
+      return request
+        .get(`/unicorns/${foonicorn._id}`)
+        .then(res => {
+          return res.text;
+        })
+        .then(savedUnicorn => {
+          var onicorn = JSON.stringify(foonicorn);
+          assert.deepEqual(savedUnicorn, onicorn);
         });
     });
   });
