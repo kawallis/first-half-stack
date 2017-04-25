@@ -10,7 +10,7 @@ const request = chai.request(app);
 
 describe('app', () => {
 
-    const DB_TEST_URI = 'mongodb://localhost:27017/test-teas';
+    const DB_TEST_URI = 'mongodb://localhost:27017/testTeas';
 
     before(() => connect.connect(DB_TEST_URI));
     before(() => connect.db.dropDatabase());
@@ -22,23 +22,22 @@ describe('app', () => {
 
     describe('POST', () => {
 
-        it('saves a tea at /teas', () => {
+        it('saves a tea at /testTeas', () => {
             return request
-                .post('/tea')
+                .post('/teas')
                 .send(bombTea)
                 .then(res => res.body)
                 .then(savedTea => {
-                    assert.isOK(savedTea._id);
+                    assert.ok(savedTea._id);
                     bombTea._id = savedTea._id;
                     assert.deepEqual(savedTea, bombTea);
-                });                
+                });
         });
     });
 
     describe('GET', () => {
 
-
-        it('saves a tea at /teas', () => {
+        it('gets all teas at /testTeas', () => {
             return request
                 .get('/teas')
                 .then(res => res.text)
