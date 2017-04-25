@@ -77,4 +77,16 @@ describe('Puppies DB /', () => {
     });
   });
 
+  describe('UPDATE /', () => {
+    it('updates an object', () => {
+      connection.db.collection('poms');
+      gibbs.color = 'rainbow';
+      return request.put(`/puppies/${gibbs._id}`)
+        .send(gibbs)
+        .then(res => res.body)
+        .then(pom => assert.equal(pom.color, gibbs.color));
+    });
+
+  });
+
 });
