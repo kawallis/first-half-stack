@@ -20,7 +20,19 @@ describe('app', () => {
         name: 'amazing tea'
     };
 
+    const badTea = {
+        name: 'shitty tea'
+    };
+
     describe('POST', () => {
+
+        before(() => {
+            return request
+            .post('/teas')
+            .send(badTea)
+            .then(res => res.body)
+            .then(savedTea => badTea._id = savedTea._id);
+        });
 
         it('saves a tea at /testTeas', () => {
             return request
@@ -41,9 +53,21 @@ describe('app', () => {
             return request
                 .get('/teas')
                 .then(res => res.body)
-                .then(teas => assert.equal(teas, bombTea));
+                .then(teas => {
+                    assert.equal(teas[1].name, bombTea.name);
+                    assert.equal(teas.length, 2);
+                });
+
+        });
+
+        it('gets a tea by id', () => {
+            return request
+                .get(`/teas/${badTea._id}`)
+                .then(res => res.body)
+                .then(tea => {
+                    assert.equal(tea.name, badTea.name);
+                });
         });
 
     });
-
 });
