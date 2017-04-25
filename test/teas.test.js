@@ -70,4 +70,18 @@ describe('app', () => {
         });
 
     });
+
+    describe('UPDATE', () => {
+
+        it('updates an item in db with put', () => {
+            badTea.name = 'lipton';
+            return request 
+                .put(`/teas/${badTea._id}`)
+                .send(badTea)
+                .then(res => res.body)
+                .then(updatedTea => {
+                    assert.equal(updatedTea.name, 'lipton');
+                });
+        });
+    });
 });
