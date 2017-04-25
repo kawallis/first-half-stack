@@ -37,6 +37,7 @@ describe('Puppies DB /', () => {
 
   describe('GET /', () => {
     it('find poms db', () => {
+      connect.db.collection('poms');
       return request
         .get('/puppies')
         .then(res => {
@@ -47,6 +48,7 @@ describe('Puppies DB /', () => {
     });
 
     it('finds a pom by id', () => {
+      connect.db.collection('poms');
       return request.get(`/puppies/:${gibbs._id}`)
         .then(res => res.body)
         .then(pom => assert.deepEqual(pom, gibbs));
