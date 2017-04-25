@@ -89,4 +89,13 @@ describe('Puppies DB /', () => {
 
   });
 
+  describe('REMOVE /', () => {
+    it('deletes an object', () => {
+      connection.db.collection('poms');
+      return request.delete(`/puppies/${gibbs._id}`)
+      .then(res => res.body)
+      .then(res => assert.equal(res.deleted, true));
+    });
+  });
+
 });
