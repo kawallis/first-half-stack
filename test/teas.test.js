@@ -40,8 +40,8 @@ describe('app', () => {
         it('gets all teas at /testTeas', () => {
             return request
                 .get('/teas')
-                .then(res => res.text)
-                .then(text => assert.equal(text, bombTea));
+                .then(res => res.body)
+                .then(teas => assert.equal(teas, bombTea));
         });
 
     });
