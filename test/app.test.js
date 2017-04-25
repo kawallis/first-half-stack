@@ -4,11 +4,16 @@ const assert = chai.assert;
 chai.use(chaiHttp);
 
 const app = require('../lib/app');
-const connect = require('../lib/helpers/connect');
+const connection = require('../lib/connect');
 
 const request = chai.request(app);
 
 describe('Puppies DB /', () => {
+
+  const DB_URI = 'mongodb://localhost:27017/unicorns-test';
+  before(() => connection.connect(DB_URI));
+  before(() => connection.db.dropDatabase());
+  after(() => connection.close());
 
   function savePom(pom) {
     return request
@@ -21,9 +26,14 @@ describe('Puppies DB /', () => {
     color: 'white'
   };
 
+  const ginger = {
+    name: 'Ginger',
+    color: 'red'
+  };
+
   describe('POST /', () => {
 
-    it('saves a pom', () => {
+    it('saves a pom (Gibbs)', () => {
       return savePom(gibbs)
         .then(res => res.body)
         .then(savedPom => {
@@ -33,25 +43,37 @@ describe('Puppies DB /', () => {
         });
     });
 
+    it('saves a pom (Ginger)', () => {
+      return savePom(ginger)
+        .then(res => res.body)
+        .then(savedPom => {
+          assert.isOk(savedPom._id);
+          ginger._id = savedPom._id;
+          assert.deepEqual(savedPom, ginger);
+        });
+    });
+
   });
 
   describe('GET /', () => {
     it('find poms db', () => {
-      connect.db.collection('poms');
+      connection.db.collection('poms');
       return request
         .get('/puppies')
         .then(res => {
-          console.log(res.body);
           return res.body;
         })
-        .then(pom => assert.deepEqual(pom, null));
+        .then(poms => {
+          assert.equal(poms[0].name, 'Gibbs');
+          assert.equal(poms.length, 2);
+        });
     });
 
     it('finds a pom by id', () => {
-      connect.db.collection('poms');
-      return request.get(`/puppies/:${gibbs._id}`)
+      connection.db.collection('poms');
+      return request.get(`/puppies/${ginger._id}`)
         .then(res => res.body)
-        .then(pom => assert.deepEqual(pom, gibbs));
+        .then(pom => assert.equal(pom.name, ginger.name));
     });
   });
 
