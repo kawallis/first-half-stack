@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "//pretest": "npm run lint",
+    "test": "mocha",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -18,10 +20,16 @@
   },
   "homepage": "https://github.com/NeversSync/first-half-stack#readme",
   "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
     "mongodb": "^2.2.26",
     "url": "^0.11.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.3.0",
+    "morgan": "^1.8.1",
     "nodemon": "^1.11.0"
   }
 }
