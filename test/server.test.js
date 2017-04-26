@@ -53,15 +53,40 @@ describe('Unicorns REST API', () => {
           return res.text;
         })
         .then(savedUnicorn => {
-          var onicorn = JSON.stringify(foonicorn);
-          assert.deepEqual(savedUnicorn, onicorn);
+
+          var savedacorn = JSON.parse(savedUnicorn);
+          assert.deepEqual(savedacorn, foonicorn);
+        });
+    });
+  });
+
+  describe('PUT /unicorns/:nameToUpdate/:newName', () => {
+
+    it('update successful or not', () => {
+      return request
+        .put('/unicorns/brownie/blackie')
+        .then(res => {
+          return res.body;
+        })
+        .then(updatedUnicorn => {
+          var statusCode = updatedUnicorn.nModified;
+          assert.deepEqual(statusCode, 1);
+        });
+    });
+  }); 
+  describe('Delete /unicorns/:nameToDelete', () => {
+
+    it('delete successful or not', () => {
+      return request
+        .delete('/unicorns/blackie')
+        .then(res => {
+          return res.body;
+        })
+        .then(updatedUnicorn => {
+          var statusCode = updatedUnicorn.ok;
+          assert.deepEqual(statusCode, 1);
         });
     });
   });
 
 });
-
-
-
-
-
