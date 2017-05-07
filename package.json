@@ -1,20 +1,33 @@
 {
-  "name": "first-half-stack",
+  "name": "puppies-express",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "pretest": "eslint .",
+    "test": "mocha",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mofo37/first-half-stack.git"
+    "url": "git+https://github.com/mofo37/puppies-express.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mofo37/first-half-stack/issues"
+    "url": "https://github.com/mofo37/puppies-express/issues"
   },
-  "homepage": "https://github.com/mofo37/first-half-stack#readme"
+  "homepage": "https://github.com/mofo37/puppies-express#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "mongodb": "^2.2.26",
+    "body-parser": "^1.17.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "eslint": "^3.19.0",
+    "mocha": "^3.3.0",
+    "morgan": "^1.8.1"
+  }
 }
