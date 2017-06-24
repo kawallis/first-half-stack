@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "start": "nodemon server.js",
-    "pretest": "eslint ."
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "mocha --recursive",
+    "test:watch": "npm run test -- -w",
+    "test:unit": "mocha test/unit",
+    "test:e2e": "mocha test/e2e",
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
